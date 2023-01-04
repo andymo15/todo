@@ -72,9 +72,10 @@ app.post("/todos", (req,res)=>{
 app.put("/api/todos/:id", (req,res)=>{
   // find todo by ID and edit it
   const id = req.params.id
-  todoModel.findByIdAndUpdate(id, {task:req.body.task,
-  completed: req.body.completed}, 
-    function(err,updated){
+  todoModel.findByIdAndUpdate(id, {
+    task:req.body.task,
+    completed: req.body.completed}, 
+      function(err,updated){
       if (err) {
         console.log(err)
       } else {
@@ -87,8 +88,15 @@ app.put("/api/todos/:id", (req,res)=>{
 //   res.send("got a put request")
 // })
 
-app.delete("todos/:id", (req,res)=>{
-  // find todo by ID and delete it
+app.delete("/api/todos/:id", (req,res)=>{
+  const id = req.params.id
+  todoModel.findByIdAndDelete(id, function(err,deleted){
+    if (err) {
+      console.log(err)
+    } else {
+      console.log("deleted", deleted)
+    }
+  })
 })
 
 
