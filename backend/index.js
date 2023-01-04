@@ -38,7 +38,7 @@ const todoModel = mongoose.model("Todo", todoSchema);
 
 
 app.get("/todos", (req,res)=>{
-  // use Todo.find to find all todos
+  // use find to find all todos
   todoModel.find({},function(err, foundTodos){
     if (err) {
       console.log(err)
@@ -46,6 +46,17 @@ app.get("/todos", (req,res)=>{
       res.send(foundTodos)
     }
   });
+})
+
+app.get("/todos/:id",(req,res)=>{
+  const id = req.params.id
+  todoModel.findById(id, function(err,foundTodo){
+    if (err){
+      console.log(err)
+    } else {
+      res.send(foundTodo)
+    }
+  })
 })
 
 app.post("/todos", (req,res)=>{
@@ -58,9 +69,23 @@ app.post("/todos", (req,res)=>{
   res.send(todo);
 })
 
-app.put("todos/:id", (req,res)=>{
+app.put("/api/todos/:id", (req,res)=>{
   // find todo by ID and edit it
+  const id = req.params.id
+  todoModel.findByIdAndUpdate(id, {task:req.body.task,
+  completed: req.body.completed}, 
+    function(err,updated){
+      if (err) {
+        console.log(err)
+      } else {
+        res.send(updated)
+      }    
+  })
 })
+
+// app.put("todos/:id", (req,res)=>{
+//   res.send("got a put request")
+// })
 
 app.delete("todos/:id", (req,res)=>{
   // find todo by ID and delete it
