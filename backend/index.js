@@ -35,12 +35,17 @@ const todoSchema = new mongoose.Schema({
 const todoModel = mongoose.model("Todo", todoSchema);
 
 
-app.get("/getData", (req,res)=>{
-  res.send("Hello World")
-});
+
 
 app.get("/todos", (req,res)=>{
   // use Todo.find to find all todos
+  todoModel.find({},function(err, foundTodos){
+    if (err) {
+      console.log(err)
+    } else {
+      res.send(foundTodos)
+    }
+  });
 })
 
 app.post("/todos", (req,res)=>{
