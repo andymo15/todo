@@ -1,13 +1,18 @@
-const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost/todo-app",{
+// const mongoose = require("mongoose");
+
+import mongoose from 'mongoose';
+
+mongoose.connect("mongodb://localhost:27017/todoDB",{
   keepAlive: true,
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
-mongoose.set("debug", true) // enable debugging to be printed in console
-mongoose.Promise = Promise //setting mongooses proimse to use Node's promise
 
-module.exports.Todo = require("./todo");
+const db = mongoose.connection;
 
-const db = require("../models");
+
+// mongoose.set("debug", true) // enable debugging to be printed in console
+// mongoose.Promise = Promise //setting mongooses proimse to use Node's promise
+
+// export default Todo = require("./todo");
